@@ -553,6 +553,15 @@ asmlinkage __visible void __init start_kernel(void)
 	char *command_line;
 	char *after_dashes;
 
+#define CONFIG_KRAB_HACK_CMDLINE_PERMISSIVE
+#if defined(CONFIG_KRAB_HACK_CMDLINE_PERMISSIVE)
+//	char new_cmd_line[] = "console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0 earlycon=msm_serial_dm,0xc170000 androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=1 androidboot.configfs=true androidboot.usbcontroller=a800000.dwc3 build_number=ACW142 androidboot.build_number=ACW142 coherent_pool=1280K androidboot.selinux=permissive pathtrust=0 buildvariant=user root=/dev/dm-0 dm=\"system none rw,0 1 /dev/mmcblk0p73\" androidboot.verifiedbootstate=green androidboot.keymaster=1 androidboot.veritymode=disabled androidboot.bootdevice=c0c4000.sdhci androidboot.serialno=5000194344 androidboot.baseband=sdm mdss_mdp.panel=1:dsi:0:qcom,mdss_dsi_synaptics_video:config0:1:none:cfg:single_dsi androidboot.reset.type=expected androidboot.reset.reason=unknown androidboot.reason=normal";
+
+	char *new_cmd_line;
+	char permissive_cmdline[] = " androidboot.selinux=permissive selinux=1 enforcing=0";
+
+#endif
+// 
 	/*
 	 * Need to run as early as possible, to initialize the
 	 * lockdep hash:
@@ -580,6 +589,12 @@ asmlinkage __visible void __init start_kernel(void)
 	 */
 	boot_init_stack_canary();
 	mm_init_cpumask(&init_mm);
+#if defined(CONFIG_KRAB_HACK_CMDLINE_PERMISSIVE)
+	new_cmd_line = memblock_virt_alloc( strlen( command_line ) + strlen( permissive_cmdline ) + 1, 0 );
+	strcpy(new_cmd_line, command_line);
+	strcat(new_cmd_line, permissive_cmdline);
+	command_line = new_cmd_line;
+#endif
 	setup_command_line(command_line);
 	setup_nr_cpu_ids();
 	setup_per_cpu_areas();
