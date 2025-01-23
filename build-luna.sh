@@ -16,5 +16,5 @@ make O=../BUILD CROSS_COMPILE=$CROSS_COMPILE ARCH=$ARCH mrproper
 #make CONFIG_BBRY=1 O=../BUILD CROSS_COMPILE=$CROSS_COMPILE ARCH=$ARCH athena-perf_defconfig
 
 # use config extracted from device for now
-cp config-from-luna ../BUILD/.config
+cp config-from-luna-droidian ../BUILD/.config
 make O=../BUILD CROSS_COMPILE=$CROSS_COMPILE ARCH=$ARCH -j12 Image.gz
