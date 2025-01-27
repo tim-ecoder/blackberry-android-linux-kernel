@@ -1,4 +1,4 @@
-linux-android-blackberry-athena (0.0.0+git20230829122528.ad999af.jesus.droidian.athena.ace748.insecure) jesus; urgency=medium
+linux-android-blackberry-athena (0.0.0+git20230829122528.ad999af.jesus.droidian.athena.ace748.insecure+git20230911120802.4404fa0.jesus.droidian.athena.ace748.insecure.dirty) jesus; urgency=medium
 
   [ Jesús Higueras ]
   * build: +x scripts
@@ -13,6 +13,13 @@ linux-android-blackberry-athena (0.0.0+git20230829122528.ad999af.jesus.droidian.
   * Let there be gzip!
   * drivers/socinfo: hardcode "athena", not "luna"
   * add droidian packaging and kernel config
+  * Disable security crap in droidian athena
+  * Specify data partition in athena cmdline
+  * drivers/usb: fix conflict when RNDIS is enabled
+  * Stop gitignoring /debian
+  * droidian athena: disable grsec, allow disabling selinux, unset CONFIG_RT_GROUP_SCHED
+  * droidian athena: terrible hack to override console=null hardcoded by bootrom
+  * droidian athena: change more kernel config parameters. battery works!
 
   [ Mark Sohm ]
   * Kernel Source Code for SDM636 ACE748 Image
@@ -25,5 +32,5 @@ linux-android-blackberry-athena (0.0.0+git20230829122528.ad999af.jesus.droidian.
   [ Tim Windsor ]
   * Initial commit
 
- -- Jesús Higueras <jesus@dabbleam.com>  Tue, 29 Aug 2023 14:25:28 +0200
+ -- Jesús Higueras <jesus@dabbleam.com>  Mon, 11 Sep 2023 14:08:02 +0200
 
